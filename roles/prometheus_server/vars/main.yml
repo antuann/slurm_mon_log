@@ -1,2 +1,5 @@
 ---
-# vars file for prometheus_server
+
+prometheus_version : 2.54.1
+firewall_open_port : false
+selinux_disable : false
