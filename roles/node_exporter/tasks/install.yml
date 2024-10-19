@@ -1,0 +1,49 @@
+---
+
+- name: Create directories for prometheus
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+  loop:
+    - '/tmp/node_exporter'
+    - '/etc/sysconfig'
+
+- name: Download And Unzipped NodeExporter
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+    dest: /tmp/node_exporter
+    creates: /tmp/node_exporter/node_exporter-{{ node_exporter_version }}.linux-amd64
+    remote_src: yes
+
+- name: Copy Bin Files From Unzipped to Prometheus
+  ansible.builtin.copy:
+    src: /tmp/node_exporter/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
+    dest: /usr/local/bin/
+    remote_src: yes
+    mode: preserve
+    owner: root
+    group: root
+
+- name: Create File key list NodeExporter
+  ansible.builtin.template:
+    src=templates/node_exporter
+    dest=/etc/sysconfig/
+  notify:
+    - systemd reload
+
+- name: Create File for NodeExporter Systemd
+  ansible.builtin.template:
+    src=templates/node_exporter.service
+    dest=/etc/systemd/system/
+  notify:
+    - systemd reload
+
+
+- name: Systemctl NodeExporter Start
+  ansible.builtin.systemd_service:
+    name: node_exporter
+    state: started
+    enabled: yes
+    daemon_reload: true

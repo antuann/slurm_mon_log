@@ -1,2 +1,5 @@
 ---
-# vars file for node_exporter
+
+node_exporter_version : 1.8.2
+firewall_open_port : false
+selinux_disable : false
