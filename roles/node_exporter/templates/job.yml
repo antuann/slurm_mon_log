@@ -1,0 +1,10 @@
+
+  - job_name:       'node-{{ ansible_host }}'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ['{{ ansible_host }}:9100']
+        labels:
+          group: '{{ group_name }}'

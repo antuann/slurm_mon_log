@@ -28,15 +28,15 @@
 
 - name: Create File key list NodeExporter
   ansible.builtin.template:
-    src=templates/node_exporter
-    dest=/etc/sysconfig/
+    src: templates/node_exporter
+    dest: /etc/sysconfig/
   notify:
     - systemd reload
 
 - name: Create File for NodeExporter Systemd
   ansible.builtin.template:
-    src=templates/node_exporter.service
-    dest=/etc/systemd/system/
+    src: templates/node_exporter.service
+    dest: /etc/systemd/system/
   notify:
     - systemd reload
 
@@ -47,3 +47,13 @@
     state: started
     enabled: yes
     daemon_reload: true
+
+- name: Add Job to Prometheus server
+  ansible.builtin.template:
+    src: templates/job.yml
+    dest: /etc/prometheus/prometheus.d/job-{{ ansible_host }}.yml
+    owner: prometheus
+    group: prometheus
+  delegate_to: "{{ prometheus_host }}"
+  notify:
+    - restart prometheus
