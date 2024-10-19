@@ -6,8 +6,8 @@ Documentation=https://github.com/prometheus/node_exporter
 Restart=always
 User=root
 EnvironmentFile=/etc/sysconfig/node_exporter
-ExecStart=/usr/local/bin/node_exporter \$OPTIONS
-ExecReload=/bin/kill -HUP \$MAINPID
+ExecStart=/usr/local/bin/node_exporter $OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=20s
 SendSIGKILL=no
 
