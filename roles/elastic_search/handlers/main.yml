@@ -1,2 +1,8 @@
 ---
-# handlers file for elastic_search
+
+- name: firewalld systemd restart
+  ansible.builtin.command: firewall-cmd --reload
+  when: firewall_open_port == true
+- name: systemd reload
+  ansible.builtin.systemd_service:
+    daemon_reload: yes

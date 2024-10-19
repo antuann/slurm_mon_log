@@ -1,0 +1,35 @@
+---
+
+- name: Create directories for Elastic Search
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: prometheus
+    group: prometheus
+  loop:
+    - '/tmp/elasticsearch'
+
+- name: Download GPG-KEY-elasticsearch
+  ansible.builtin.get_url:
+    url: https://mirror.yandex.ru/mirrors/elastic/8/dists/stable/Release.gpg
+    dest: /etc/apt/keyrings/elasticsearch-apt-keyring.gpg
+
+- name: Install ElasticSearch apt sources
+  apt_repository:
+    repo: "deb [trusted=yes] https://mirror.yandex.ru/mirrors/elastic/8/ stable main"
+    state: present
+
+- name: Debian - Ensure Java is installed
+  become: yes
+  ansible.builtin.apt:
+    update_cache: yes
+    name: elasticsearch
+  when: ansible_os_family == 'Debian'
+  notify:
+    - systemd reload
+
+- name: Systemctl ElasticSearch Start
+  ansible.builtin.systemd_service:
+    name: elasticsearch
+    state: started
+    enabled: yes

@@ -1,28 +1,30 @@
 ---
-- name: "install Prometheus"
-  hosts: prometheus_servers
-  become: true
-  roles:
-    - role: prometheus_server
-      selinux_disable : true
-      firewall_open_port : false
-      prometheus_version : 2.54.1
+#- name: "install Prometheus"
+#  hosts: prometheus_servers
+#  become: true
+#  roles:
+#    - role: prometheus_server
+#      selinux_disable : true
+#      firewall_open_port : false
+#      prometheus_version : 2.54.1
 
-- name: "install Node Exporter"
-  hosts: node_exporter
-  become: true
-  roles:
-    - role: node_exporter
-      prometheus_host: '127.0.0.1'
-      group_name: 'production'
-      selinux_disable : true
-      firewall_open_port : false
+#- name: "install Node Exporter"
+#  hosts: node_exporter
+#  become: true
+#  roles:
+#    - role: node_exporter
+#      prometheus_host: '127.0.0.1'
+#      group_name: 'production'
+#      selinux_disable : true
+#      firewall_open_port : false
 
 - name: "install ElasticSearch"
   hosts: elastic_search
   become: true
   roles:
     - role: elastic_search
+  vars:
+    es_version: 7.17.0
 
 - name: "install Kibana"
   hosts: kibana
