@@ -1,0 +1,30 @@
+---
+- name: "install Prometheus"
+  hosts: prometheus_servers
+  become: true
+  roles:
+    - role: prometheus_server
+
+- name: "install Node Exporter"
+  hosts: node_exporter
+  become: true
+  roles:
+    - role: node_exporter
+
+- name: "install ElasticSearch"
+  hosts: elastic_search
+  become: true
+  roles:
+    - role: elastic_search
+
+- name: "install Kibana"
+  hosts: kibana
+  become: true
+  roles:
+    - role: kibana
+
+- name: "install FluentBit"
+  hosts: fluent_bit
+  become: true
+  roles:
+    - role: fluent_bit
