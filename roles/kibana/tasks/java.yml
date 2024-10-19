@@ -1,0 +1,14 @@
+---
+
+- name: Refresh java repo
+  become: yes
+  ansible.builtin.apt: 
+    update_cache: yes
+  changed_when: false
+  when: ansible_os_family == 'Debian'
+
+- name: Debian - Ensure Java is installed
+  become: yes
+  ansible.builtin.apt:
+    name: openjdk-17-jdk
+  when: ansible_os_family == 'Debian'

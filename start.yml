@@ -18,19 +18,23 @@
 #      selinux_disable : true
 #      firewall_open_port : false
 
-- name: "install ElasticSearch"
-  hosts: elastic_search
-  become: true
-  roles:
-    - role: elastic_search
-  vars:
-    es_version: 7.17.0
+#- name: "install ElasticSearch"
+#  hosts: elastic_search
+#  become: true
+#  roles:
+#    - role: elastic_search
+#      selinux_disable : true
+#      firewall_open_port : false
+
 
 - name: "install Kibana"
   hosts: kibana
   become: true
   roles:
     - role: kibana
+      selinux_disable : true
+      firewall_open_port : false
+
 
 - name: "install FluentBit"
   hosts: fluent_bit

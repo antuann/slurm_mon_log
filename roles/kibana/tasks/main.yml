@@ -1,2 +1,7 @@
 ---
-# tasks file for kibana
+
+- name: Prepare For Install Prometheus
+  include_tasks: tasks/prepare.yml
+
+- name: Install Prometheus
+  include_tasks: tasks/install.yml

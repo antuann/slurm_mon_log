@@ -1,14 +1,10 @@
 ---
 
 
-- name: Install Java
-  include_tasks: tasks/java.yml
-
-
 - name: Install package
   ansible.builtin.apt:
     pkg:
-    - apt-transport-https 
+    - apt-transport-https
     - gpg
   when:
     ansible_os_family == "Debian"
@@ -16,6 +12,7 @@
 - name: Install key for mirror yandex.ru
   ansible.builtin.apt:
     deb: https://mirror.yandex.ru/debian-multimedia/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2024.9.1_all.deb
+#http://mirror.yandex.ru/debian-multimedia/pool/main/d/debian-multimedia-keyring/debian-multimedia-keyring%5f2008.10.16%5fall.deb
 
 - name: Security Settings For RedHat
   block:
@@ -24,7 +21,7 @@
         port: "{{ item }}"
         permanent: true
         state: enabled
-      loop: [ '9200/tcp']
+      loop: [ '5601/tcp']
       notify:
         - firewalld systemd restart
       when: firewall_open_port == true
@@ -40,6 +37,7 @@
   when:
     ansible_os_family == "RedHat"
 
+
 - name: Security Settings For Debian
   block:
     - name: Allow TCP Ports
@@ -50,7 +48,7 @@
         protocol: tcp
         jump: ACCEPT
         destination_port: "{{ item }}"
-      loop: [ '9200']
+      loop: [ '5601']
       when:
         firewall_open_port == true
   when:
