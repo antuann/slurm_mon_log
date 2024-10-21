@@ -1,2 +1,8 @@
 ---
 # vars file for fluent_bit
+elasticsearch_password: "secrets123"
+elasticsearch_host: '127.0.0.1'
+elasticsearch_port: '9200'
+
+selinux_disable : true
+firewall_open_port : false

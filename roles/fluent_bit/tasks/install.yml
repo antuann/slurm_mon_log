@@ -1,0 +1,30 @@
+---
+- name: Add an Apt signing key to fluent-bit
+  ansible.builtin.apt_key:
+    url: https://packages.fluentbit.io/fluentbit.key
+    keyring: /usr/share/keyrings/fluentbit-keyring.gpg
+
+
+
+- name: Install fluent-bit apt sources
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/debian/bookworm bookworm main"
+    state: present
+
+- name: Install fluent-bit
+  ansible.builtin.apt:
+    name: fluent-bit
+    state: present
+
+- name: "upload fluent-bit config"
+  ansible.builtin.template:
+    src: "fluent-bit.conf"
+    dest: " /etc/fluent-bit/"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: "ensure fluent-bit service started"
+  ansible.builtin.service:
+    name: fluent-bit
+    state: started
