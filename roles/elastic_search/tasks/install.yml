@@ -28,3 +28,7 @@
     name: elasticsearch
     state: started
     enabled: yes
+
+- name: ElasticSearch Reset Password 
+  ansible.builtin.command:
+    cmd: printf 'y\n{{ elasticsearch_password }}\n{{ elasticsearch_password }}'| /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i

@@ -1,31 +1,31 @@
 ---
-#- name: "install Prometheus"
-#  hosts: prometheus_servers
-#  become: true
-#  roles:
-#    - role: prometheus_server
-#      selinux_disable : true
-#      firewall_open_port : false
-#      prometheus_version : 2.54.1
-
-#- name: "install Node Exporter"
-#  hosts: node_exporter
-#  become: true
-#  roles:
-#    - role: node_exporter
-#      prometheus_host: '127.0.0.1'
-#      group_name: 'production'
-#      selinux_disable : true
-#      firewall_open_port : false
-
-#- name: "install ElasticSearch"
-#  hosts: elastic_search
-#  become: true
-#  roles:
-#    - role: elastic_search
-#      selinux_disable : true
-#      firewall_open_port : false
-
+# - name: "install Prometheus"
+#   hosts: prometheus_servers
+#   become: true
+#   roles:
+#     - role: prometheus_server
+#       selinux_disable : true
+#       firewall_open_port : false
+#       prometheus_version : 2.54.1
+# 
+# - name: "install Node Exporter"
+#   hosts: node_exporter
+#   become: true
+#   roles:
+#     - role: node_exporter
+#       prometheus_host: '127.0.0.1'
+#       group_name: 'production'
+#       selinux_disable : true
+#       firewall_open_port : false
+# 
+- name: "install ElasticSearch"
+  hosts: elastic_search
+  become: true
+  roles:
+    - role: elastic_search
+      selinux_disable : true
+      firewall_open_port : false
+      elasticsearch_password: "secrets123"
 
 - name: "install Kibana"
   hosts: kibana
@@ -34,7 +34,9 @@
     - role: kibana
       selinux_disable : true
       firewall_open_port : false
-
+      elasticsearch_password: "secrets123"
+      elasticsearch_host: '127.0.0.1'
+      elasticsearch_port: '9200'
 
 - name: "install FluentBit"
   hosts: fluent_bit
