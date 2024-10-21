@@ -3,6 +3,6 @@
 elasticsearch_password: "secrets123"
 elasticsearch_host: '127.0.0.1'
 elasticsearch_port: '9200'
-
+fluent_bit_version: 3.1.9
 selinux_disable : true
 firewall_open_port : false

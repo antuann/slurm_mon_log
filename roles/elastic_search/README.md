@@ -1,38 +1,45 @@
-Role Name
+elastic_search
 =========
 
-A brief description of the role goes here.
+Роль для установки ElasticSearch.
 
-Requirements
+Требования
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Роль тестировалась на ОС Debian 12
 
-Role Variables
+Переменные роли
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+selinux_disable - может принимать значения true/false. По умолчанию false. При true отключает selinux в OS семейства RedHat
+firewall_open_port - может принимать значения true/false. По умолчанию false.  открывает порты в фаерволе
+elastic_search_version - По умолчанию 8.9.2. Можно указать версию ElasticSearch
+elasticsearch_password - можно указать пароль для пользователя elastic
 
-Dependencies
+Зависимости
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Роль самодостаточна
 
-Example Playbook
+Пример использования
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+- name: "install ElasticSearch"
+  hosts: elastic_search
+  become: true
+  roles:
+    - role: elastic_search
+      elastic_search_version: 8.9.2
+      selinux_disable : true
+      firewall_open_port : false
+      elasticsearch_password: "secrets123"
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
+Лицензия
 -------
 
 BSD
 
-Author Information
+Информаци о авторе
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Автор Дворников

@@ -4,8 +4,8 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    owner: prometheus
-    group: prometheus
+    owner: root
+    group: root
   loop:
     - '/tmp/elasticsearch'
 
@@ -18,7 +18,7 @@
   become: yes
   ansible.builtin.apt:
     update_cache: yes
-    name: elasticsearch
+    name: elasticsearch={{ elastic_search_version }}
   when: ansible_os_family == 'Debian'
   notify:
     - systemd reload

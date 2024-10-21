@@ -13,6 +13,7 @@
   become: true
   roles:
     - role: node_exporter
+      node_exporter_version : 1.8.2
       prometheus_host: '127.0.0.1'
       group_name: 'production'
       selinux_disable : true
@@ -23,6 +24,7 @@
   become: true
   roles:
     - role: elastic_search
+      elastic_search_version: 8.9.2
       selinux_disable : true
       firewall_open_port : false
       elasticsearch_password: "secrets123"
@@ -32,11 +34,12 @@
   become: true
   roles:
     - role: kibana
+      kibana_version: 8.9.2
       selinux_disable : true
       firewall_open_port : false
+      elasticsearch_user: "elastic"
       elasticsearch_password: "secrets123"
-      elasticsearch_host: '127.0.0.1'
-      elasticsearch_port: '9200'
+      elasticsearch_host: 'http://127.0.0.1:9200'
 
 - name: "install FluentBit"
   hosts: fluent_bit
@@ -45,6 +48,5 @@
     - role: fluent_bit
       selinux_disable : true
       firewall_open_port : false
-      elasticsearch_password: "secrets123"
       elasticsearch_host: '127.0.0.1'
       elasticsearch_port: '9200'

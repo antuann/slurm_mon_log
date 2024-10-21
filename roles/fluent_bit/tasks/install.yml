@@ -13,13 +13,13 @@
 
 - name: Install fluent-bit
   ansible.builtin.apt:
-    name: fluent-bit
+    name: fluent-bit={{ fluent_bit_version }}
     state: present
 
 - name: "upload fluent-bit config"
   ansible.builtin.template:
     src: "fluent-bit.conf"
-    dest: " /etc/fluent-bit/"
+    dest: "/etc/fluent-bit/"
     owner: "root"
     group: "root"
     mode: 0644

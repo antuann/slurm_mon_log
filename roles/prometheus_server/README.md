@@ -1,38 +1,48 @@
-Role Name
+
+prometheus_server
 =========
 
-A brief description of the role goes here.
+Роль предназначена для установки сервера prometheus
+Особенность данной роли заключается в наличии дирректории /etc/prometheus/prometheus.d/. Данная дирректория содержит конфигурационный файл prometheus.yml и
+файлы вида job-{{ имя хоста }}.yml. При каждом запуске сервиса prometheus.service эти файлы собираются в конфигурационный файл /etc/prometheus/prometheus.ym
+l.
 
-Requirements
+Требования
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Роль тестировалась на ОС Debian 12
 
-Role Variables
+Переменные роли
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+selinux_disable - может принимать значения true/false. По умолчанию false. При true отключает selinux в OS семейства RedHat
+firewall_open_port - может принимать значения true/false. По умолчанию false.  открывает порты в фаерволе
+prometheus_version - по умолчанию 2.54.1. Можно указать версию Prometheus для установки
 
-Dependencies
+
+Зависимости
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Роль самодостаточна
 
-Example Playbook
+Пример использования
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+- name: "install Prometheus"
+  hosts: prometheus_servers
+  become: true
+  roles:
+    - role: prometheus_server
+      selinux_disable : true
+      firewall_open_port : false
+      prometheus_version : 2.54.1
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
+Лицензия
 -------
 
 BSD
 
-Author Information
+Информаци о авторе
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Автор Дворников

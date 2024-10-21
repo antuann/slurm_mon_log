@@ -18,7 +18,7 @@
   become: yes
   ansible.builtin.apt:
     update_cache: yes
-    name: kibana=8.10.3
+    name: kibana={{ kibana_version }}
   when: ansible_os_family == 'Debian'
   notify:
     - systemd reload

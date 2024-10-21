@@ -1,6 +1,4 @@
 ---
-
-
 - name: Install Java
   include_tasks: tasks/java.yml
 
