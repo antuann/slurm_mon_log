@@ -2,8 +2,9 @@
 es_package_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch"
 reserved_xpack_users: ["elastic","kibana","logstash_system"]
 sysd_config_file: "/etc/systemd/system/elasticsearch.service.d/override.conf"
-elasticseach_password: "vhoditelydidobrie"
-elastic_search_version: 8.9.2
+elastic_password: "vhoditelydidobrie"
+kibana_system_password: "vhoditelydidobrie"
+eelastic_search_version: 8.9.2
 
 
 firewall_open_port : false

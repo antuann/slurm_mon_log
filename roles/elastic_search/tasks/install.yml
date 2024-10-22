@@ -29,6 +29,12 @@
     state: started
     enabled: yes
 
-- name: ElasticSearch Reset Password 
+- name: ElasticSearch Reset Password elastic
   ansible.builtin.command:
-    cmd: printf 'y\n{{ elasticsearch_password }}\n{{ elasticsearch_password }}'| /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
+    cmd: printf 'y\n{{ elastic_password }}\n{{ elastic_password }}'| /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
+
+- name: ElasticSearch Reset Password kibana_system
+  ansible.builtin.command:
+    cmd: printf 'y\n{{ kibana_system_password }}\n{{ kibana_system_password }}'| /usr/share/elasticsearch/bin/elasticsearch-reset-password -u kibana_system -i
+
+

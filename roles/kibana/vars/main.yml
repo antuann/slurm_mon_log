@@ -1,7 +1,8 @@
 ---
 elasticsearch_user: "elastic"
 elasticsearch_password: "secrets123"
-elasticsearch_host: 'http://127.0.0.1:9200'
+elasticsearch_host: '127.0.0.1'
+elasticsearch_port: '9200'
 firewall_open_port: false
 selinux_disable: false
 kibana_version: 8.10.3

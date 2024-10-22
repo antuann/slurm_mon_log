@@ -154,6 +154,7 @@ kibana
 
 Роль тестировалась на ОС Debian 12
 Для работы Kibana нужен установленный ElasticSearch
+Сейчас соединение происходит по токену, и он генериться в роли кибаны на машине кибаны, поэтому ElasticSearch должен быть установлен локально.
 
 Переменные роли
 --------------
@@ -161,9 +162,11 @@ kibana
 selinux_disable - может принимать значения true/false. По умолчанию false. При true отключает selinux в OS семейства RedHat
 firewall_open_port - может принимать значения true/false. По умолчанию false.  открывает порты в фаерволе
 kibana_version - по умолчанию 8.10.3. Можно указать версию Kibana
-elasticsearch_host - нужно установить сетевое имя сервера ElasticSearch в виде строки 'протокол подключения://имя сервера:порт'
+elasticsearch_host - нужно установить сетевое имя сервера ElasticSearch
+elasticsearch_port - нужно установить порт к которому может подключиться Kibana к ElasticSearch
 elasticsearch_user - имя пользователя для подключения к серверу ElasticSearch
-elasticsearch_password: - пароль для подключения к серверу ElasticSearch
+elastic_password: - пароль для учётной записи elastic сервера ElasticSearch
+kibana_system_password: - пароль для учётной записи kibana_system сервера ElasticSearch
 
 Зависимости
 ------------
@@ -182,8 +185,10 @@ elasticsearch_password: - пароль для подключения к серв
       selinux_disable : true
       firewall_open_port : false
       elasticsearch_user: "elastic"
-      elasticsearch_password: "secrets123"
-      elasticsearch_host: 'http://127.0.0.1:9200'
+      elastic_password: "secrets123"
+      kibana_system_password: "secrets123"
+      elasticsearch_host: '127.0.0.1'
+      elasticsearch_port: '9200'
 
 Лицензия
 -------

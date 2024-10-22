@@ -28,8 +28,21 @@
     src: templates/kibana.yml
     dest: /etc/kibana/
     owner: root
-    group: root
+    group: kibana
+    mode: 0644
 
+- name: Copy setup script
+  ansible.builtin.template:
+    src: templates/kibana-setup.sh
+    dest: /usr/share/kibana/bin
+    owner: root
+    group: root
+    mode: 0755
+
+- name: AppToken
+  ansible.builtin.command:
+    cmd: /usr/share/kibana/bin/kibana-setup.sh
+      
 - name: Systemctl Kibana Start
   ansible.builtin.systemd_service:
     name: kibana

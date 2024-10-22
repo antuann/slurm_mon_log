@@ -27,7 +27,9 @@
       elastic_search_version: 8.9.2
       selinux_disable : true
       firewall_open_port : false
-      elasticsearch_password: "secrets123"
+      elastic_password: elastik
+      kibana_system_password: kibana
+
 
 - name: "install Kibana"
   hosts: kibana
@@ -37,9 +39,10 @@
       kibana_version: 8.9.2
       selinux_disable : true
       firewall_open_port : false
-      elasticsearch_user: "elastic"
-      elasticsearch_password: "secrets123"
-      elasticsearch_host: 'http://127.0.0.1:9200'
+      elasticsearch_user: "kibana_system"
+      elasticsearch_password: "kibana"
+      elasticsearch_host: '127.0.0.1'
+      elasticsearch_port: '9200'
 
 - name: "install FluentBit"
   hosts: fluent_bit
